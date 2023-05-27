@@ -1,0 +1,64 @@
+|	SIMPLE_EXPR TOK_ADD SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::ADD,$2);
+	}
+|	SIMPLE_EXPR TOK_SUB SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::SUB,$2);
+	}
+|	SIMPLE_EXPR TOK_MUL SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::MUL,$2);
+	}
+|	SIMPLE_EXPR TOK_DIV SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::DIV,$2);
+	}
+|	SIMPLE_EXPR TOK_MOD SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::MOD,$2);
+	}
+|	SIMPLE_EXPR TOK_XOR SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::XOR,$2);
+	}
+|	SIMPLE_EXPR TOK_CROSS SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::CROSS,$2);
+	}
+|	SIMPLE_EXPR TOK_EQ SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::EQ,$2);
+	}
+|	SIMPLE_EXPR TOK_GEQ SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::GEQ,$2);
+	}
+|	SIMPLE_EXPR TOK_LEQ SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::LEQ,$2);
+	}
+|	SIMPLE_EXPR TOK_GT SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::GT,$2);
+	}
+|	SIMPLE_EXPR TOK_LT SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::LT,$2);
+	}
+|	SIMPLE_EXPR TOK_NEQ SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::NEQ,$2);
+	}
+|	SIMPLE_EXPR TOK_DOT SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::DOT,$2);
+	}
+|	SIMPLE_EXPR TOK_DOT2 SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::DOT2,$2);
+	}
+|	SIMPLE_EXPR TOK_ASSIGN SIMPLE_EXPR
+	{
+		$$ = new BinopExpression($1,BinopExpression::ASSIGN,$2);
+	}
