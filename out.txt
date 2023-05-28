@@ -1,0 +1,10 @@
+---- New Command
+ASSIGN|--$var a: Nil
+      |--TABLE
+
+
+---- New Command
+ASSIGN|--$var &Anon: TableIndex|$tab a|--1.000000
+      |--TABLE
+
+

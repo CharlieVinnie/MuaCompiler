@@ -65,7 +65,7 @@ class FunctionArgs : public SimpleExpression{
 public:
 	Expression* fir;
 	FunctionArgs* oth;
-	FunctionArgs(Expression* e,FunctionArgs* o=nullptr) : fir(e), oth(o) {}
+	FunctionArgs(Expression* e,FunctionArgs* o=nullptr) : fir(e), oth(o) { assert(fir); }
 	virtual string what() const { return "FunctionArgs"; }
 };
 
@@ -82,13 +82,23 @@ public:
 	virtual string what() const { return "Table"; }
 };
 
+class Variable;
+
+class TableIndex : public SimpleExpression{
+public:
+	Variable* t;
+	Expression* e;
+	virtual string what() const { return "TableIndex"; }
+	TableIndex(Variable* _t,Expression* _e) : t(_t), e(_e) { assert(t&&e); }
+};
+
 class Variable : public SimpleExpression{
 	Variable(string _name){
 		name=_name; type=V_Nil;
 	}
 public:
 	enum Type {
-		V_Nil, V_Bool, V_Number, V_String, V_Function, V_Table
+		V_Nil, V_Bool, V_Number, V_String, V_Function, V_Table, V_TableIndex
 	};
 	Type type;
 	bool b;
@@ -96,6 +106,7 @@ public:
 	string s;
 	Function* f;
 	Table* t;
+	TableIndex* id;
 	string name;
 	virtual string what() const { return "Variable"; }
 	static map<string,Variable*> var_map;
@@ -107,6 +118,9 @@ public:
 			return var_map[_name] = new Variable(_name);
 		}
 	}
+	static Variable* getAnonVariable(){
+		return new Variable("&Anon");
+	}
 	void set(Variable::Type ty,void* ptr){
 		type=ty;
 		if(ty==V_Bool) b=*(bool*)ptr;
@@ -114,17 +128,10 @@ public:
 		else if(ty==V_String) s=*(string*)ptr;
 		else if(ty==V_Function) f=(Function*)ptr;
 		else if(ty==V_Table) t=(Table*)ptr;
+		else if(ty==V_TableIndex) id=(TableIndex*)ptr;
 		else if(ty==V_Nil) ;
 		else throw 404;
 	}
-};
-
-class TableIndex : public SimpleExpression{
-public:
-	Variable* t;
-	Expression* e;
-	virtual string what() const { return "TableIndex"; }
-	TableIndex(Variable* _t,Expression* _e) : t(_t), e(_e) {}
 };
 
 class FunctionCall : public SimpleExpression{
@@ -132,7 +139,7 @@ public:
 	Variable* f;
 	FunctionArgs* args;
 	virtual string what() const { return "FunctionCall"; }
-	FunctionCall(Variable* _f,FunctionArgs* a) : f(_f), args(a) { DEBUG("Created FunctionCall()\n"); }
+	FunctionCall(Variable* _f,FunctionArgs* a) : f(_f), args(a) { assert(f);  DEBUG("Created FunctionCall()\n"); }
 };
 
 class BinopExpression : public Expression{
@@ -144,7 +151,7 @@ public:
 	Type op;
 	Expression* rhs;
 	virtual string what() const { return "BinopExpression"; }
-	BinopExpression(Expression* l,Type o,Expression* r) : lhs(l), op(o), rhs(r) { DEBUG("Created BinopExpression()\n"); }
+	BinopExpression(Expression* l,Type o,Expression* r) : lhs(l), op(o), rhs(r) { assert(lhs&&rhs);  DEBUG("Created BinopExpression()\n"); }
 };
 
 class UnopExpression : public Expression{
@@ -155,14 +162,14 @@ public:
 	Expression* exp;
 	Type op;
 	virtual string what() const { return "UnopExpression"; }
-	UnopExpression(Type o,Expression* l) : op(o), exp(l) {}
+	UnopExpression(Type o,Expression* l) : op(o), exp(l) { assert(exp); }
 };
 
 class BracketExpression : public Expression{
 public:
 	Expression* exp;
 	virtual string what() const { return "BracketExpression"; }
-	BracketExpression(Expression* l) : exp(l) { DEBUG("Created BracketExpression()\n"); }
+	BracketExpression(Expression* l) : exp(l) { assert(exp);  DEBUG("Created BracketExpression()\n"); }
 };
 
 class Commands{

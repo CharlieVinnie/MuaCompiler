@@ -223,12 +223,14 @@ FUNC_CALL :
 	VAR TOK_L_BRACKET FUNC_ARGS TOK_R_BRACKET
 	{
 		Variable* ptr = dynamic_cast<Variable*>($1);
+		assert(ptr);
 		FunctionArgs* args = dynamic_cast<FunctionArgs*>($3);
 		$$ = new FunctionCall(ptr,args);
 	}
 |	VAR TOK_L_BRACKET TOK_R_BRACKET
 	{
 		Variable* ptr = dynamic_cast<Variable*>($1);
+		assert(ptr);
 		$$ = new FunctionCall(ptr,nullptr);
 	}
 ;
@@ -249,16 +251,21 @@ VAR :
 	TOK_NAME
 	{
 		$$ = Variable::getVariable(string($1));
+		assert($$);
 	}
 |	TOK_NAME TOK_DOT TOK_NAME
 	{
 		Variable* p = Variable::getVariable(string($1));
-		$$ = new TableIndex(p,new String($3));
+		Variable* res = Variable::getAnonVariable();
+		res->set(Variable::V_TableIndex,new TableIndex(p,new String($3)));
+		$$ = res;
 	}
 |	TOK_NAME TOK_L_SQUARE EXPR TOK_R_SQUARE
 	{
 		Variable* p = Variable::getVariable(string($1));
-		$$ = new TableIndex(p,$3);
+		Variable* res = Variable::getAnonVariable();
+		res->set(Variable::V_TableIndex,new TableIndex(p,$3));
+		$$ = res;
 	}
 ;
 

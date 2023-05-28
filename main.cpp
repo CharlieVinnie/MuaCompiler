@@ -3,6 +3,8 @@
 #include "lexer.hpp"
 
 int main() {
+    freopen("in.txt","r",stdin);
+    freopen("out.txt","w",stdout);
 #ifdef YYDEBUG
   yydebug = 1;
 #endif

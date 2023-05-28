@@ -1,6 +1,7 @@
 #include "mylang.hpp"
 
 void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
+    assert(expr!=nullptr);
     string t=expr->what();
     int lstx=x;
     if(t=="Nil"){
@@ -31,7 +32,14 @@ void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
         sprintf(mp[x++]+y,"TABLE");
     }
     else if(t=="Variable"){
-        sprintf(mp[x++]+y,"$var %s",dynamic_cast<Variable*>(expr)->name.c_str());
+        const char* name[]={"Nil","Bool","Number","String","Function","Table","TableIndex"};
+        Variable* p=dynamic_cast<Variable*>(expr);
+        int y2=y+sprintf(mp[x]+y,"$var %s: %s",p->name.c_str(),name[int(p->type)]);
+        if(p->type==Variable::V_TableIndex){
+            PrintExpr(p->id,mp,x,y2+1);
+            for(int i=lstx;i<x;i++) mp[i][y2]='|';
+        }
+        else x++;
     }
     else if(t=="TableIndex"){
         TableIndex* p=dynamic_cast<TableIndex*>(expr);
@@ -42,7 +50,7 @@ void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
     else if(t=="FunctionCall"){
         FunctionCall* p=dynamic_cast<FunctionCall*>(expr);
         int y2=y+sprintf(mp[x]+y,"$fun %s",p->f->name.c_str());
-        PrintExpr(p->args,mp,x,y2);
+        if(p->args!=nullptr) PrintExpr(p->args,mp,x,y2);
         for(int i=lstx;i<x;i++) mp[i][y2]='|';
     }
     else if(t=="BinopExpression"){

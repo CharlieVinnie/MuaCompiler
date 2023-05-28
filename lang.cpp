@@ -563,8 +563,8 @@ static const yytype_int16 yyrline[] =
        0,    67,    67,    75,    79,    86,    91,    95,    99,   103,
      108,   112,   116,   120,   124,   128,   132,   136,   140,   144,
      148,   152,   156,   164,   168,   172,   176,   181,   188,   192,
-     196,   200,   204,   208,   212,   216,   223,   229,   237,   241,
-     249,   253,   258
+     196,   200,   204,   208,   212,   216,   223,   230,   239,   243,
+     251,   256,   263
 };
 #endif
 
@@ -1497,66 +1497,73 @@ yyreduce:
 #line 224 "lang.y"
         {
 		Variable* ptr = dynamic_cast<Variable*>((yyvsp[-3].p));
+		assert(ptr);
 		FunctionArgs* args = dynamic_cast<FunctionArgs*>((yyvsp[-1].p));
 		(yyval.p) = new FunctionCall(ptr,args);
 	}
-#line 1504 "lang.cpp"
+#line 1505 "lang.cpp"
     break;
 
   case 37: /* FUNC_CALL: VAR TOK_L_BRACKET TOK_R_BRACKET  */
-#line 230 "lang.y"
+#line 231 "lang.y"
         {
 		Variable* ptr = dynamic_cast<Variable*>((yyvsp[-2].p));
+		assert(ptr);
 		(yyval.p) = new FunctionCall(ptr,nullptr);
 	}
-#line 1513 "lang.cpp"
+#line 1515 "lang.cpp"
     break;
 
   case 38: /* FUNC_ARGS: EXPR  */
-#line 238 "lang.y"
+#line 240 "lang.y"
         {
 		(yyval.p) = new FunctionArgs((yyvsp[0].p));
 	}
-#line 1521 "lang.cpp"
+#line 1523 "lang.cpp"
     break;
 
   case 39: /* FUNC_ARGS: EXPR TOK_COMMA FUNC_ARGS  */
-#line 242 "lang.y"
+#line 244 "lang.y"
         {
 		FunctionArgs* args = dynamic_cast<FunctionArgs*>((yyvsp[0].p));
 		(yyval.p) = new FunctionArgs((yyvsp[-2].p),args);
 	}
-#line 1530 "lang.cpp"
+#line 1532 "lang.cpp"
     break;
 
   case 40: /* VAR: TOK_NAME  */
-#line 250 "lang.y"
+#line 252 "lang.y"
         {
 		(yyval.p) = Variable::getVariable(string((yyvsp[0].str)));
+		assert((yyval.p));
 	}
-#line 1538 "lang.cpp"
+#line 1541 "lang.cpp"
     break;
 
   case 41: /* VAR: TOK_NAME TOK_DOT TOK_NAME  */
-#line 254 "lang.y"
+#line 257 "lang.y"
         {
 		Variable* p = Variable::getVariable(string((yyvsp[-2].str)));
-		(yyval.p) = new TableIndex(p,new String((yyvsp[0].str)));
+		Variable* res = Variable::getAnonVariable();
+		res->set(Variable::V_TableIndex,new TableIndex(p,new String((yyvsp[0].str))));
+		(yyval.p) = res;
 	}
-#line 1547 "lang.cpp"
+#line 1552 "lang.cpp"
     break;
 
   case 42: /* VAR: TOK_NAME TOK_L_SQUARE EXPR TOK_R_SQUARE  */
-#line 259 "lang.y"
+#line 264 "lang.y"
         {
 		Variable* p = Variable::getVariable(string((yyvsp[-3].str)));
-		(yyval.p) = new TableIndex(p,(yyvsp[-1].p));
+		Variable* res = Variable::getAnonVariable();
+		res->set(Variable::V_TableIndex,new TableIndex(p,(yyvsp[-1].p)));
+		(yyval.p) = res;
 	}
-#line 1556 "lang.cpp"
+#line 1563 "lang.cpp"
     break;
 
 
-#line 1560 "lang.cpp"
+#line 1567 "lang.cpp"
 
       default: break;
     }
@@ -1749,7 +1756,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 265 "lang.y"
+#line 272 "lang.y"
 
 
 void yyerror(char* s)
