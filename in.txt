@@ -1,1 +1,1 @@
-ADD  SUB  MUL  DIV  MOD  XOR  CROSS  EQ  GEQ  LEQ  GT  LT  NEQ  DOT  DOT2  ASSIGN
+math.min(1)

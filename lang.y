@@ -59,6 +59,7 @@
 %left TOK_MUL TOK_DIV TOK_MOD
 %left TOK_NOT TOK_LEN TOK_POS TOK_NEG
 %right TOK_XOR
+%left TOK_DOT
 
 %%
 
@@ -156,10 +157,10 @@ EXPR :
 	{
 		$$ = new BinopExpression($1,BinopExpression::NEQ,$3);
 	}
-|	EXPR TOK_DOT EXPR
-	{
-		$$ = new BinopExpression($1,BinopExpression::DOT,$3);
-	}
+//|	EXPR TOK_DOT EXPR
+//	{
+//		$$ = new BinopExpression($1,BinopExpression::DOT,$3);
+//	}
 |	EXPR TOK_2DOT EXPR
 	{
 		$$ = new BinopExpression($1,BinopExpression::DOT2,$3);
@@ -222,19 +223,13 @@ FUNC_CALL :
 	VAR TOK_L_BRACKET FUNC_ARGS TOK_R_BRACKET
 	{
 		Variable* ptr = dynamic_cast<Variable*>($1);
-		if(ptr==nullptr||ptr->type!=Variable::V_Function){
-			yyerror("In FunctionCall: it's not a function!");
-		}
 		FunctionArgs* args = dynamic_cast<FunctionArgs*>($3);
-		$$ = new FunctionCall(ptr->f,args);
+		$$ = new FunctionCall(ptr,args);
 	}
 |	VAR TOK_L_BRACKET TOK_R_BRACKET
 	{
 		Variable* ptr = dynamic_cast<Variable*>($1);
-		if(ptr==nullptr||ptr->type!=Variable::V_Function){
-			yyerror("In FunctionCall: it's not a function!");
-		}
-		$$ = new FunctionCall(ptr->f,nullptr);
+		$$ = new FunctionCall(ptr,nullptr);
 	}
 ;
 
@@ -258,18 +253,12 @@ VAR :
 |	TOK_NAME TOK_DOT TOK_NAME
 	{
 		Variable* p = Variable::getVariable(string($1));
-		if(p->type!=Variable::V_Table){
-			yyerror("Attempt to index something that's not a table!");
-		}
-		$$ = new TableIndex(p->t,new String($3));
+		$$ = new TableIndex(p,new String($3));
 	}
 |	TOK_NAME TOK_L_SQUARE EXPR TOK_R_SQUARE
 	{
 		Variable* p = Variable::getVariable(string($1));
-		if(p->type!=Variable::V_Table){
-			yyerror("Attempt to index something that's not a table!");
-		}
-		$$ = new TableIndex(p->t,$3);
+		$$ = new TableIndex(p,$3);
 	}
 ;
 

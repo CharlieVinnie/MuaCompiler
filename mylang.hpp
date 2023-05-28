@@ -3,6 +3,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+#define DEBUG(fmt,...) fprintf(stderr,fmt,##__VA_ARGS__)
+
 // enum token_class {
 //     // Reserved
 // 	TOK_AND=1, TOK_BREAK, TOK_DO, TOK_ELSE, TOK_ELSEIF, TOK_END,TOK_FALSE,TOK_FOR,TOK_FUNCTION,TOK_IF,
@@ -119,18 +121,18 @@ public:
 
 class TableIndex : public SimpleExpression{
 public:
-	Table* t;
+	Variable* t;
 	Expression* e;
 	virtual string what() const { return "TableIndex"; }
-	TableIndex(Table* _t,Expression* _e) : t(_t), e(_e) {}
+	TableIndex(Variable* _t,Expression* _e) : t(_t), e(_e) {}
 };
 
 class FunctionCall : public SimpleExpression{
 public:
-	Function* f;
+	Variable* f;
 	FunctionArgs* args;
 	virtual string what() const { return "FunctionCall"; }
-	FunctionCall(Function* _f,FunctionArgs* a) : f(_f), args(a) {}
+	FunctionCall(Variable* _f,FunctionArgs* a) : f(_f), args(a) { DEBUG("Created FunctionCall()\n"); }
 };
 
 class BinopExpression : public Expression{
@@ -142,7 +144,7 @@ public:
 	Type op;
 	Expression* rhs;
 	virtual string what() const { return "BinopExpression"; }
-	BinopExpression(Expression* l,Type o,Expression* r) : lhs(l), op(o), rhs(r) {}
+	BinopExpression(Expression* l,Type o,Expression* r) : lhs(l), op(o), rhs(r) { DEBUG("Created BinopExpression()\n"); }
 };
 
 class UnopExpression : public Expression{
@@ -160,7 +162,7 @@ class BracketExpression : public Expression{
 public:
 	Expression* exp;
 	virtual string what() const { return "BracketExpression"; }
-	BracketExpression(Expression* l) : exp(l) {}
+	BracketExpression(Expression* l) : exp(l) { DEBUG("Created BracketExpression()\n"); }
 };
 
 class Commands{
@@ -184,7 +186,8 @@ double MakeDemInt(char* s,int len);
 double MakeHexInt(char* s,int len);
 double MakeReal(char* s,int len);
 char* MakeString(char* s,int len);
-void PrintProgram(Commands* cmd,char mp[][1000],int& x);
-void PrintExpr(Expression* expr,char mp[][1000],int& x,int y);
+void PrintCmd(Commands* cmd,char mp[][100],int& x);
+void PrintExpr(Expression* expr,char mp[][100],int& x,int y);
+void PrintProgram();
 
 #endif // LANG_H_INCLUDED

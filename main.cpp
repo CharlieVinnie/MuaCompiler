@@ -3,7 +3,11 @@
 #include "lexer.hpp"
 
 int main() {
+#ifdef YYDEBUG
+  yydebug = 1;
+#endif
     yyin = stdin;
     yyparse();
-    fclose(stdin);
+    fprintf(stderr,"Parse Done\n");
+    PrintProgram();
 }
