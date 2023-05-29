@@ -1,0 +1,151 @@
+Starting parse
+Entering state 0
+Stack now 0
+Reading a token
+Next token is token TOK_NAME ()
+Shifting token TOK_NAME ()
+Entering state 3
+Stack now 0 3
+Reducing stack by rule 39 (line 251):
+   $1 = token TOK_NAME ()
+-> $$ = nterm VAR ()
+Entering state 18
+Stack now 0 18
+Reading a token
+Next token is token TOK_L_SQUARE ()
+Shifting token TOK_L_SQUARE ()
+Entering state 45
+Stack now 0 18 45
+Reading a token
+Next token is token TOK_INT ()
+Shifting token TOK_INT ()
+Entering state 1
+Stack now 0 18 45 1
+Reducing stack by rule 27 (line 188):
+   $1 = token TOK_INT ()
+-> $$ = nterm SIMPLE_EXPR ()
+Entering state 16
+Stack now 0 18 45 16
+Reducing stack by rule 4 (line 86):
+   $1 = nterm SIMPLE_EXPR ()
+-> $$ = nterm EXPR ()
+Entering state 69
+Stack now 0 18 45 69
+Reading a token
+Next token is token TOK_R_SQUARE ()
+Shifting token TOK_R_SQUARE ()
+Entering state 73
+Stack now 0 18 45 69 73
+Reducing stack by rule 41 (line 264):
+   $1 = nterm VAR ()
+   $2 = token TOK_L_SQUARE ()
+   $3 = nterm EXPR ()
+   $4 = token TOK_R_SQUARE ()
+-> $$ = nterm VAR ()
+Entering state 18
+Stack now 0 18
+Reading a token
+Next token is token TOK_L_SQUARE ()
+Shifting token TOK_L_SQUARE ()
+Entering state 45
+Stack now 0 18 45
+Reading a token
+Next token is token TOK_INT ()
+Shifting token TOK_INT ()
+Entering state 1
+Stack now 0 18 45 1
+Reducing stack by rule 27 (line 188):
+   $1 = token TOK_INT ()
+-> $$ = nterm SIMPLE_EXPR ()
+Entering state 16
+Stack now 0 18 45 16
+Reducing stack by rule 4 (line 86):
+   $1 = nterm SIMPLE_EXPR ()
+-> $$ = nterm EXPR ()
+Entering state 69
+Stack now 0 18 45 69
+Reading a token
+Next token is token TOK_R_SQUARE ()
+Shifting token TOK_R_SQUARE ()
+Entering state 73
+Stack now 0 18 45 69 73
+Reducing stack by rule 41 (line 264):
+   $1 = nterm VAR ()
+   $2 = token TOK_L_SQUARE ()
+   $3 = nterm EXPR ()
+   $4 = token TOK_R_SQUARE ()
+-> $$ = nterm VAR ()
+Entering state 18
+Stack now 0 18
+Reading a token
+Next token is token TOK_ASSIGN ()
+Reducing stack by rule 33 (line 212):
+   $1 = nterm VAR ()
+-> $$ = nterm SIMPLE_EXPR ()
+Entering state 16
+Stack now 0 16
+Reducing stack by rule 4 (line 86):
+   $1 = nterm SIMPLE_EXPR ()
+-> $$ = nterm EXPR ()
+Entering state 15
+Stack now 0 15
+Next token is token TOK_ASSIGN ()
+Shifting token TOK_ASSIGN ()
+Entering state 40
+Stack now 0 15 40
+Reading a token
+Next token is token TOK_L_BRACE ()
+Shifting token TOK_L_BRACE ()
+Entering state 8
+Stack now 0 15 40 8
+Reading a token
+Next token is token TOK_R_BRACE ()
+Shifting token TOK_R_BRACE ()
+Entering state 23
+Stack now 0 15 40 8 23
+Reducing stack by rule 32 (line 208):
+   $1 = token TOK_L_BRACE ()
+   $2 = token TOK_R_BRACE ()
+-> $$ = nterm SIMPLE_EXPR ()
+Entering state 16
+Stack now 0 15 40 16
+Reducing stack by rule 4 (line 86):
+   $1 = nterm SIMPLE_EXPR ()
+-> $$ = nterm EXPR ()
+Entering state 62
+Stack now 0 15 40 62
+Reading a token
+Next token is token TOK_EOL ()
+Reducing stack by rule 23 (line 168):
+   $1 = nterm EXPR ()
+   $2 = token TOK_ASSIGN ()
+   $3 = nterm EXPR ()
+Created BinopExpression()
+-> $$ = nterm EXPR ()
+Entering state 15
+Stack now 0 15
+Next token is token TOK_EOL ()
+Shifting token TOK_EOL ()
+Entering state 43
+Stack now 0 15 43
+Reading a token
+Now at end of input.
+Reducing stack by rule 2 (line 75):
+   $1 = nterm EXPR ()
+   $2 = token TOK_EOL ()
+-> $$ = nterm CMD ()
+Entering state 14
+Stack now 0 14
+Reducing stack by rule 1 (line 67):
+   $1 = nterm CMD ()
+-> $$ = nterm PROGRAM ()
+Entering state 13
+Stack now 0 13
+Now at end of input.
+Shifting token "end of file" ()
+Entering state 25
+Stack now 0 13 25
+Stack now 0 13 25
+Cleanup: popping token "end of file" ()
+Cleanup: popping nterm PROGRAM ()
+Parse Done

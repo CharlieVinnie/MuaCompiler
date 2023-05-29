@@ -193,8 +193,8 @@ double MakeDemInt(char* s,int len);
 double MakeHexInt(char* s,int len);
 double MakeReal(char* s,int len);
 char* MakeString(char* s,int len);
-void PrintCmd(Commands* cmd,char mp[][100],int& x);
-void PrintExpr(Expression* expr,char mp[][100],int& x,int y);
+void PrintCmd(Commands* cmd,char mp[][1000],int& x);
+void PrintExpr(Expression* expr,char mp[][1000],int& x,int y);
 void PrintProgram();
 
 #endif // LANG_H_INCLUDED

@@ -1,6 +1,6 @@
 #include "mylang.hpp"
 
-void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
+void PrintExpr(Expression* expr,char mp[][1000],int& x,int y){
     assert(expr!=nullptr);
     string t=expr->what();
     int lstx=x;
@@ -43,7 +43,15 @@ void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
     }
     else if(t=="TableIndex"){
         TableIndex* p=dynamic_cast<TableIndex*>(expr);
-        int y2=y+sprintf(mp[x]+y,"$tab %s|--",p->t->name.c_str());
+        string ss=p->t->name;
+        int y2=y+sprintf(mp[x]+y,"$tab|--");
+        if(ss!="&Anon"){
+            sprintf(mp[x++]+y2,"%s",p->t->name.c_str());
+        }
+        else{
+            PrintExpr(p->t,mp,x,y2);
+        }
+        sprintf(mp[x]+y,"    |--");
         PrintExpr(p->e,mp,x,y2);
         for(int i=lstx;i<x;i++) mp[i][y2-3]='|';
     }
@@ -77,7 +85,7 @@ void PrintExpr(Expression* expr,char mp[][100],int& x,int y){
     }
 }
 
-void PrintCmd(Commands* cmd,char mp[][100],int& x){
+void PrintCmd(Commands* cmd,char mp[][1000],int& x){
     if(cmd==nullptr) return;
     sprintf(mp[x++],"---- New Command");
     PrintExpr(cmd->exp,mp,x,0);
@@ -87,9 +95,9 @@ void PrintCmd(Commands* cmd,char mp[][100],int& x){
 }
 
 void PrintProgram(){
-    char mp[1000][100]={0};
+    char mp[1000][1000]={0};
     int ln=0;
-    for(int i=0;i<1000;i++) for(int j=0;j<99;j++) mp[i][j]=' ';
+    for(int i=0;i<1000;i++) for(int j=0;j<999;j++) mp[i][j]=' ';
     PrintCmd(whole_program,mp,ln);
     for(int i=0;i<ln;i++) printf("%s\n",mp[i]);
 }

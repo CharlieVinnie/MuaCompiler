@@ -253,16 +253,18 @@ VAR :
 		$$ = Variable::getVariable(string($1));
 		assert($$);
 	}
-|	TOK_NAME TOK_DOT TOK_NAME
+|	VAR TOK_DOT TOK_NAME
 	{
-		Variable* p = Variable::getVariable(string($1));
+		// Variable* p = Variable::getVariable(string($1));
+		Variable* p=dynamic_cast<Variable*>($1);
 		Variable* res = Variable::getAnonVariable();
 		res->set(Variable::V_TableIndex,new TableIndex(p,new String($3)));
 		$$ = res;
 	}
-|	TOK_NAME TOK_L_SQUARE EXPR TOK_R_SQUARE
+|	VAR TOK_L_SQUARE EXPR TOK_R_SQUARE
 	{
-		Variable* p = Variable::getVariable(string($1));
+		// Variable* p = Variable::getVariable(string($1));
+		Variable* p=dynamic_cast<Variable*>($1);
 		Variable* res = Variable::getAnonVariable();
 		res->set(Variable::V_TableIndex,new TableIndex(p,$3));
 		$$ = res;
