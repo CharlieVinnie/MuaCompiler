@@ -4,7 +4,7 @@
 #include "lang.hpp"
 using namespace std;
 
-map<string,Variable*> Variable::var_map;
+// map<string,Variable*> Variable::var_map;
 
 Commands* whole_program = nullptr;
 

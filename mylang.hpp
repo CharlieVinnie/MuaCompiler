@@ -82,9 +82,14 @@ public:
 	virtual string what() const { return "Table"; }
 };
 
-class Variable;
+class Variable : public SimpleExpression{
+public:
+	string name;
+	virtual string what() const { return "Variable"; }
+	Variable(string _name="$Anon") { name=_name; }
+};
 
-class TableIndex : public SimpleExpression{
+class TableIndex : public Variable{
 public:
 	Variable* t;
 	Expression* e;
@@ -92,47 +97,47 @@ public:
 	TableIndex(Variable* _t,Expression* _e) : t(_t), e(_e) { assert(t&&e); }
 };
 
-class Variable : public SimpleExpression{
-	Variable(string _name){
-		name=_name; type=V_Nil;
-	}
-public:
-	enum Type {
-		V_Nil, V_Bool, V_Number, V_String, V_Function, V_Table, V_TableIndex
-	};
-	Type type;
-	bool b;
-	double n;
-	string s;
-	Function* f;
-	Table* t;
-	TableIndex* id;
-	string name;
-	virtual string what() const { return "Variable"; }
-	static map<string,Variable*> var_map;
-	static Variable* getVariable(string _name){
-		if(var_map.count(_name)){
-			return var_map[_name];
-		}
-		else{
-			return var_map[_name] = new Variable(_name);
-		}
-	}
-	static Variable* getAnonVariable(){
-		return new Variable("&Anon");
-	}
-	void set(Variable::Type ty,void* ptr){
-		type=ty;
-		if(ty==V_Bool) b=*(bool*)ptr;
-		else if(ty==V_Number) n=*(double*)ptr;
-		else if(ty==V_String) s=*(string*)ptr;
-		else if(ty==V_Function) f=(Function*)ptr;
-		else if(ty==V_Table) t=(Table*)ptr;
-		else if(ty==V_TableIndex) id=(TableIndex*)ptr;
-		else if(ty==V_Nil) ;
-		else throw 404;
-	}
-};
+// class Variable : public SimpleExpression{
+// 	Variable(string _name){
+// 		name=_name; type=V_Nil;
+// 	}
+// public:
+// 	enum Type {
+// 		V_Nil, V_Bool, V_Number, V_String, V_Function, V_Table, V_TableIndex
+// 	};
+// 	Type type;
+// 	bool b;
+// 	double n;
+// 	string s;
+// 	Function* f;
+// 	Table* t;
+// 	TableIndex* id;
+// 	string name;
+// 	virtual string what() const { return "Variable"; }
+// 	static map<string,Variable*> var_map;
+// 	static Variable* getVariable(string _name){
+// 		if(var_map.count(_name)){
+// 			return var_map[_name];
+// 		}
+// 		else{
+// 			return var_map[_name] = new Variable(_name);
+// 		}
+// 	}
+// 	static Variable* getAnonVariable(){
+// 		return new Variable("&Anon");
+// 	}
+// 	void set(Variable::Type ty,void* ptr){
+// 		type=ty;
+// 		if(ty==V_Bool) b=*(bool*)ptr;
+// 		else if(ty==V_Number) n=*(double*)ptr;
+// 		else if(ty==V_String) s=*(string*)ptr;
+// 		else if(ty==V_Function) f=(Function*)ptr;
+// 		else if(ty==V_Table) t=(Table*)ptr;
+// 		else if(ty==V_TableIndex) id=(TableIndex*)ptr;
+// 		else if(ty==V_Nil) ;
+// 		else throw 404;
+// 	}
+// };
 
 class FunctionCall : public SimpleExpression{
 public:

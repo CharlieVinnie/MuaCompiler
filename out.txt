@@ -1,65 +1,19 @@
 ---- New Command
-ASSIGN|--$var a: Nil
+ASSIGN|--$var a
       |--TABLE
 
 
 ---- New Command
-ASSIGN|--$var &Anon: TableIndex|$tab|--a
-      |                        |    |--1.000000
-      |--TABLE
+ASSIGN|--$tab|--$var a
+      |      |--1.000000
+      |--$tab|--$var math
+      |      |--"sin"
 
 
 ---- New Command
-ASSIGN|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--a
-      |                        |    |                        |    |--1.000000
-      |                        |    |--2.000000
-      |--TABLE
-
-
----- New Command
-ASSIGN|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--a
-      |                        |    |                        |    |--1.000000
-      |                        |    |--3.000000
-      |--"hehe\'\\"
-
-
----- New Command
-ASSIGN|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--a
-      |                        |    |                        |    |--1.000000
-      |                        |    |--1.000000
-      |--$var a: Nil
-
-
----- New Command
-$fun print|--LEN|--$var a: Nil
-
-
----- New Command
-$fun print|--LEN|--$var &Anon: TableIndex|$tab|--a
-          |     |                        |    |--1.000000
-
-
----- New Command
-$fun print|--LEN|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--a
-          |     |                        |    |                        |    |--1.000000
-          |     |                        |    |--3.000000
-
-
----- New Command
-$fun print|--$var a: Nil
-
-
----- New Command
-$fun print|--$var f: Nil
-
-
----- New Command
-$fun print|--DOT2|--DOT2|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--$var &Anon: TableIndex|$tab|--a
-          |      |      |                        |    |                        |    |                        |    |                        |    |--1.000000
-          |      |      |                        |    |                        |    |                        |    |--1.000000
-          |      |      |                        |    |                        |    |--1.000000
-          |      |      |                        |    |--3.000000
-          |      |      |--"\n"
-          |      |--".."
+$fun: |$var print
+      |--$fun: |$tab|--$var a
+      |        |    |--1.000000
+      |        |--2.000000
 
 

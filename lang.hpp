@@ -124,8 +124,7 @@ extern int yydebug;
     TOK_COMMENT = 308,             /* TOK_COMMENT  */
     TOK_EOL = 309,                 /* TOK_EOL  */
     TOK_POS = 310,                 /* TOK_POS  */
-    TOK_NEG = 311,                 /* TOK_NEG  */
-    TOK_LEN = 312                  /* TOK_LEN  */
+    TOK_NEG = 311                  /* TOK_NEG  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -142,7 +141,7 @@ union YYSTYPE
 	Commands* c;
 	void* none;
 
-#line 146 "lang.hpp"
+#line 145 "lang.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

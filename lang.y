@@ -39,7 +39,6 @@
 %token<none> TOK_AND TOK_BREAK TOK_DO TOK_ELSE TOK_ELSEIF TOK_END TOK_FALSE TOK_FOR TOK_FUNCTION TOK_IF 
 %token<none> TOK_IN TOK_LOCAL TOK_NIL TOK_NOT TOK_OR TOK_REPEAT TOK_RETURN TOK_THEN TOK_TRUE TOK_UNTIL TOK_WHILE 
 %token<none> TOK_COMMENT TOK_EOL
-
 %token<none> TOK_POS TOK_NEG
 
 // Nonterminals
@@ -51,13 +50,14 @@
 %type<p> VAR
 
 // Priority
+%right TOK_ASSIGN
 %left TOK_OR
 %left TOK_AND
 %left TOK_LT TOK_GT TOK_LEQ TOK_GEQ TOK_NEQ TOK_EQ
 %left TOK_2DOT
 %left TOK_ADD TOK_SUB
 %left TOK_MUL TOK_DIV TOK_MOD
-%left TOK_NOT TOK_LEN TOK_POS TOK_NEG
+%left TOK_NOT TOK_CROSS TOK_POS TOK_NEG
 %right TOK_XOR
 %left TOK_DOT
 
@@ -250,24 +250,15 @@ FUNC_ARGS :
 VAR :
 	TOK_NAME
 	{
-		$$ = Variable::getVariable(string($1));
-		assert($$);
+		$$ = new Variable(string($1));
 	}
 |	VAR TOK_DOT TOK_NAME
 	{
-		// Variable* p = Variable::getVariable(string($1));
-		Variable* p=dynamic_cast<Variable*>($1);
-		Variable* res = Variable::getAnonVariable();
-		res->set(Variable::V_TableIndex,new TableIndex(p,new String($3)));
-		$$ = res;
+		$$ = new TableIndex(dynamic_cast<Variable*>($1),new String($3));
 	}
 |	VAR TOK_L_SQUARE EXPR TOK_R_SQUARE
 	{
-		// Variable* p = Variable::getVariable(string($1));
-		Variable* p=dynamic_cast<Variable*>($1);
-		Variable* res = Variable::getAnonVariable();
-		res->set(Variable::V_TableIndex,new TableIndex(p,$3));
-		$$ = res;
+		$$ = new TableIndex(dynamic_cast<Variable*>($1),$3);
 	}
 ;
 
