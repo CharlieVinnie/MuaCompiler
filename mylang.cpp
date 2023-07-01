@@ -88,19 +88,19 @@ void PrintExpr(Expression* expr,char mp[][1000],int& x,int y){
     }
 }
 
-void PrintCmd(Commands* cmd,char mp[][1000],int& x){
-    if(cmd==nullptr) return;
-    sprintf(mp[x++],"---- New Command");
-    PrintExpr(cmd->exp,mp,x,0);
-    sprintf(mp[x++],"");
-    sprintf(mp[x++],"");
-    PrintCmd(cmd->oth,mp,x);
-}
+// void PrintChunk(Chunk* cmd,char mp[][1000],int& x){
+//     if(cmd==nullptr) return;
+//     sprintf(mp[x++],"---- New Command");
+//     PrintExpr(cmd->exp->exp,mp,x,0);
+//     sprintf(mp[x++],"");
+//     sprintf(mp[x++],"");
+//     PrintChunk(cmd->oth,mp,x);
+// }
 
-void PrintProgram(){
-    char mp[1000][1000]={0};
-    int ln=0;
-    for(int i=0;i<1000;i++) for(int j=0;j<999;j++) mp[i][j]=' ';
-    PrintCmd(whole_program,mp,ln);
-    for(int i=0;i<ln;i++) printf("%s\n",mp[i]);
-}
+// void PrintProgram(){
+//     char mp[1000][1000]={0};
+//     int ln=0;
+//     for(int i=0;i<1000;i++) for(int j=0;j<999;j++) mp[i][j]=' ';
+//     PrintChunk(whole_program,mp,ln);
+//     for(int i=0;i<ln;i++) printf("%s\n",mp[i]);
+// }

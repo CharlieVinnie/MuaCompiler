@@ -43,11 +43,13 @@
 
 // Nonterminals
 %type<c> PROGRAM
-%type<c> CMD
 %type<p> EXPR
 %type<p> SIMPLE_EXPR
 %type<p> FUNC_CALL FUNC_ARGS
 %type<p> VAR
+
+%type<c> BLOCK
+%type<c> STAT LAST_STAT
 
 // Priority
 %right TOK_ASSIGN
@@ -64,21 +66,21 @@
 %%
 
 PROGRAM : 
-	CMD
+	BLOCK
 	{
 		$$ = ($1);
 		whole_program = $$;
 	}
 ;
 
-CMD :
+BLOCK :
 	EXPR TOK_EOL
 	{
-		$$ = new Commands($1,nullptr);
+		$$ = new Block($1,nullptr);
 	}
-|	EXPR TOK_EOL CMD
+|	EXPR TOK_EOL BLOCK
 	{
-		$$ = new Commands($1,$3);
+		$$ = new Block($1,$3);
 	}
 ;
 

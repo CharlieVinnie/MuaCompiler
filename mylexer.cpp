@@ -6,8 +6,6 @@ using namespace std;
 
 // map<string,Variable*> Variable::var_map;
 
-Commands* whole_program = nullptr;
-
 double MakeDemInt(char* s,int len){
 	double res=0;
 	for(int i=0;i<len;i++) res=res*10+(s[i]-'0');
